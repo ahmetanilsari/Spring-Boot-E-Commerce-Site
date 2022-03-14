@@ -2,6 +2,8 @@ package com.shopping.admin.user;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -69,4 +71,30 @@ public class UserController {
 		}
 		
 	}
+	
+	@GetMapping("/users/delete/{id}")
+	public String deleteUser(@PathVariable(name="id") Integer id, Model model, RedirectAttributes redirectAttributes) {
+		try {
+		service.delete(id);
+		redirectAttributes.addFlashAttribute("message", "The user ID " + id + " has been deleted successfully");
+		
+		} catch(UserNotFoundException e) {
+			redirectAttributes.addFlashAttribute("message", e.getMessage());
+		}
+		return "redirect:/users";
+	}
+	
+	@GetMapping("/users/{id}/enabled/{status}")
+	@Transactional
+	public String updateUserEnabledStatus(@PathVariable("id") Integer id,
+			@PathVariable("status") boolean enabled, RedirectAttributes redirectAttributes) {
+		service.updateUserEnabledStatus(id, enabled);
+		String status = enabled ? "enabled" : "disabled";
+		String message = "The user ID " + id + " has been " + status ;
+		redirectAttributes.addFlashAttribute("message", message);
+		
+		return "redirect:/users";
+
+	}
+	
 }
