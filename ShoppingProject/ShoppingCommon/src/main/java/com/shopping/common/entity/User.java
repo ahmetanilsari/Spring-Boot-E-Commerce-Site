@@ -1,5 +1,6 @@
 package com.shopping.common.entity;
 
+import java.beans.Transient;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -128,12 +129,14 @@ public class User {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", roles=" + roles + ", getId()=" + getId() + ", getEmail()=" + getEmail() + ", getPassword()="
-				+ getPassword() + ", getFirstName()=" + getFirstName() + ", getLastName()=" + getLastName()
-				+ ", getPhotos()=" + getPhotos() + ", isEnabled()=" + isEnabled() + ", getRoles()=" + getRoles()
-				+ ", getClass()=" + getClass() + ", hashCode()=" + hashCode() + ", toString()=" + super.toString()
-				+ "]";
+				+ ", roles=" + roles + "]";
 	}
 	
+	@Transient
+	public String getPhotosImagePath() {
+		if(id == null || photos == null) return "/images/default-user.png";
+		
+		return "/user-photos/" + this.id + "/" + this.photos;
+	}
 	
 }
