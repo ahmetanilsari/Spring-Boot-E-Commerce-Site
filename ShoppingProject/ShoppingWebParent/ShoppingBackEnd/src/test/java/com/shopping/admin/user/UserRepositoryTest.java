@@ -31,7 +31,7 @@ public class UserRepositoryTest {
 	@Test
 	public void testCreateNewUserWithOneRole() {
 		Role roleAdmin = entityManager.find(Role.class, 1);
-		User userAhmet = new User("ahmet.sari@sahabt.com","admin123","Ahmet Anil", "Sari");
+		User userAhmet = new User("ahmetsari@hotmail.com","admin123","Ahmet Anil", "Sari");
 		userAhmet.addRole(roleAdmin);
 		
 		User savedUser = repo.save(userAhmet);
@@ -68,9 +68,9 @@ public class UserRepositoryTest {
 	
 	@Test
 	public void testUpdateUserDetails() {
-		User userAhmet = repo.findById(1).get();
+		User userAhmet = repo.findById(30).get();
 		userAhmet.setEnabled(true);
-		userAhmet.setEmail("ahmet.sari1@sahabt.com");
+		userAhmet.setEmail("paulscholes@gmail.com");
 		
 		repo.save(userAhmet);
 	}
@@ -118,7 +118,7 @@ public class UserRepositoryTest {
 	
 	@Test
 	public void testEnableUser() {
-		Integer id = 1;
+		Integer id = 31;
 		repo.updateEnabledStatus(id, true);
 		
 	}
